@@ -1,0 +1,6 @@
+framework module WLTUICallKit {
+  umbrella header "WLTUICallKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

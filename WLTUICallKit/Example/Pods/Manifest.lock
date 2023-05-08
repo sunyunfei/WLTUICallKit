@@ -1,0 +1,16 @@
+PODS:
+  - WLTUICallKit (0.1.0)
+
+DEPENDENCIES:
+  - WLTUICallKit (from `../`)
+
+EXTERNAL SOURCES:
+  WLTUICallKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  WLTUICallKit: cefe6e59c3c6470bb8ef692e062e5c35bd42ee2c
+
+PODFILE CHECKSUM: 1c18b0abd2eab90d9310bfc4c32d7bde2067521e
+
+COCOAPODS: 1.11.3

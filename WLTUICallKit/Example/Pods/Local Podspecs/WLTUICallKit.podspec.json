@@ -1,0 +1,22 @@
+{
+  "name": "WLTUICallKit",
+  "version": "0.1.0",
+  "summary": "A short description of WLTUICallKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/sunyunfei/WLTUICallKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "sunyunfei": "1035044809@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/sunyunfei/WLTUICallKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "WLTUICallKit/Classes/**/*"
+}
