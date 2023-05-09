@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.3.0'
+  s.version          = '0.6.0'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
   s.xcconfig     = { 'VALID_ARCHS' => 'armv7 arm64 x86_64' }
   
   s.dependency 'Masonry'
-  s.dependency 'TUICore', '7.1.3925'
+  s.dependency 'TUICore', '~>7.1.3925'
   
   s.requires_arc = true
   s.static_framework = true
@@ -46,12 +46,12 @@ TODO: Add long description of the pod here.
   
   s.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
-    trtc.dependency 'TUICallEngine/TRTC'
+    trtc.dependency 'TUICallEngine/TRTC', '~> 1.5.1.310'
     trtc.source_files = 'WLTUICallKit/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Base/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
-    trtc.library = 'c++', 'resolv'
+    trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
+      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.gif','WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
     }
   end
   
@@ -62,7 +62,7 @@ TODO: Add long description of the pod here.
     professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
     professional.library = 'c++', 'resolv', 'sqlite3'
     professional.resource_bundles = {
-      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
+      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.gif','WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
     }
   end
 end
