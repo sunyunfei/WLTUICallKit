@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.9.2'
+  s.version          = '0.9.3'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -27,7 +27,7 @@ TODO: Add long description of the pod here.
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'sunyunfei' => '1035044809@qq.com' }
-  s.source           = { :git => 'https://github.com/sunyunfei/WLTUICallKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/sunyunfei/WLTUICallKit.git' }
   
   s.xcconfig     = { 'VALID_ARCHS' => 'armv7 arm64 x86_64' }
   
@@ -47,22 +47,22 @@ TODO: Add long description of the pod here.
   s.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
     trtc.dependency 'TUICallEngine/TRTC', '~> 1.5.1.310'
-    trtc.source_files = 'WLTUICallKit/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Base/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+    trtc.source_files = 'TUICallKit/*.{h,m,mm}', 'TUICallKit/localized/**/*.{h,m,mm}', 'TUICallKit/Base/**/*.{h,m,mm}', 'TUICallKit/Service/**/*.{h,m,mm}', 'TUICallKit/Config/*.{h,m,mm}', 'TUICallKit/UI/**/*.{h,m,mm}', 'TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
     trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.gif','WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
+      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
     }
   end
   
-  # s.subspec 'Professional' do |professional|
-  #   professional.dependency 'TXLiteAVSDK_Professional'
-  #   professional.dependency 'TUICallEngine/Professional'
-  #   professional.source_files = 'WLTUICallKit/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Base/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallKit_Professional/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
-  #   professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
-  #   professional.library = 'c++', 'resolv', 'sqlite3'
-  #   professional.resource_bundles = {
-  #     'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.gif','WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
-  #   }
-  # end
+  s.subspec 'Professional' do |professional|
+    professional.dependency 'TXLiteAVSDK_Professional'
+    professional.dependency 'TUICallEngine/Professional'
+    professional.source_files = 'TUICallKit/*.{h,m,mm}', 'TUICallKit/localized/**/*.{h,m,mm}', 'TUICallKit/Base/**/*.{h,m,mm}', 'TUICallKit/Service/**/*.{h,m,mm}', 'TUICallKit/Config/*.{h,m,mm}', 'TUICallKit/UI/**/*.{h,m,mm}', 'TUICallKit/TUICallKit_Professional/*.{h,m,mm}', 'TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+    professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
+    professional.library = 'c++', 'resolv', 'sqlite3'
+    professional.resource_bundles = {
+      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
+    }
+  end
 end
