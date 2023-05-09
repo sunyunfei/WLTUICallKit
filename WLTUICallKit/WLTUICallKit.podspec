@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.9.4'
+  s.version          = '0.9.6'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -40,6 +40,10 @@ TODO: Add long description of the pod here.
   s.pod_target_xcconfig = {
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
   }
+  s.source_files = 'TUICallKit/*.{h,m,mm}', 'TUICallKit/localized/**/*.{h,m,mm}', 'TUICallKit/Base/*.{h,m,mm}', 'TUICallKit/Service/**/*.{h,m,mm}', 'TUICallKit/Config/*.{h,m,mm}', 'TUICallKit/UI/**/*.{h,m,mm}', 'TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+  s.resource_bundles = {
+      'TUICallingKitBundle' => ['Resources/Localized/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
+    }
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.swift_version = '5.0'
   s.default_subspec = 'TRTC'
@@ -62,7 +66,7 @@ TODO: Add long description of the pod here.
     professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
     professional.library = 'c++', 'resolv', 'sqlite3'
     professional.resource_bundles = {
-      'TUICallingKitBundle' => ['Resources/Localized/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
+      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
     }
   end
 end
