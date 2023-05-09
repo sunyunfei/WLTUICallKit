@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.9.0'
+  s.version          = '0.9.1'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -51,7 +51,7 @@ TODO: Add long description of the pod here.
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
     trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
+      'TUICallingKitBundle' => ['TUICallKit/Resources/Localized/**/*.strings']
     }
   end
   
