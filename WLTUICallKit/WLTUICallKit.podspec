@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.9.1'
+  s.version          = '0.9.2'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -47,11 +47,11 @@ TODO: Add long description of the pod here.
   s.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
     trtc.dependency 'TUICallEngine/TRTC', '~> 1.5.1.310'
-    # trtc.source_files = 'WLTUICallKit/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Base/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+    trtc.source_files = 'WLTUICallKit/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Base/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
     trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['TUICallKit/Resources/Localized/**/*.strings']
+      'TUICallingKitBundle' => ['WLTUICallKit/Resources/Localized/**/*.gif','WLTUICallKit/Resources/Localized/**/*.strings', 'WLTUICallKit/Resources/AudioFile', 'WLTUICallKit/Resources/*.xcassets']
     }
   end
   
