@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WLTUICallKit'
-  s.version          = '0.9.7'
+  s.version          = '0.9.8'
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
   s.summary          = 'A short description of WLTUICallKit.'
@@ -47,22 +47,22 @@ TODO: Add long description of the pod here.
   s.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
     trtc.dependency 'TUICallEngine/TRTC', '~> 1.5.1.310'
-    trtc.source_files = 'TUICallKit/*', 'TUICallKit/localized/**/*', 'TUICallKit/Base/*', 'TUICallKit/Service/**/*', 'TUICallKit/Config/*', 'TUICallKit/UI/**/*', 'TUICallKit/TUICallKit_TRTC/*', 'TUICallKit/TUICallEngine_Framework/*'
+    trtc.source_files = 'TUICallKit/*.{h,m,mm}', 'TUICallKit/localized/**/*.{h,m,mm}', 'TUICallKit/Base/*.{h,m,mm}', 'TUICallKit/Service/**/*.{h,m,mm}', 'TUICallKit/Config/*.{h,m,mm}', 'TUICallKit/UI/**/*.{h,m,mm}', 'TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
     trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['Resources/Localized/*','Resources/Localized/**/*', 'Resources/AudioFile', 'Resources/*']
+      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
     }
   end
   
   s.subspec 'Professional' do |professional|
     professional.dependency 'TXLiteAVSDK_Professional'
     professional.dependency 'TUICallEngine/Professional'
-    professional.source_files = 'TUICallKit/*', 'TUICallKit/localized/**/*', 'TUICallKit/Base/*', 'TUICallKit/Service/**/*', 'TUICallKit/Config/*', 'TUICallKit/UI/**/*', 'TUICallKit/TUICallKit_Professional/*', 'TUICallKit/TUICallEngine_Framework/*'
+    professional.source_files = 'TUICallKit/*.{h,m,mm}', 'TUICallKit/localized/**/*.{h,m,mm}', 'TUICallKit/Base/*.{h,m,mm}', 'TUICallKit/Service/**/*.{h,m,mm}', 'TUICallKit/Config/*.{h,m,mm}', 'TUICallKit/UI/**/*.{h,m,mm}', 'TUICallKit/TUICallKit_Professional/*.{h,m,mm}', 'TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
     professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
     professional.library = 'c++', 'resolv', 'sqlite3'
     professional.resource_bundles = {
-      'TUICallingKitBundle' => ['Resources/Localized/**/*','Resources/Localized/**/*', 'Resources/AudioFile', 'Resources/*']
+      'TUICallingKitBundle' => ['Resources/Localized/**/*.gif','Resources/Localized/**/*.strings', 'Resources/AudioFile', 'Resources/*.xcassets']
     }
   end
 end
