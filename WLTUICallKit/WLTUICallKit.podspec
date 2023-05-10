@@ -45,7 +45,7 @@ TODO: Add long description of the pod here.
   s.default_subspec = 'TRTC'
 
   s.subspec 'TRTC' do |trtc|
-    trtc.source_files = 'WLTUICallKit/Classes/*.{h,m,mm}'
+    trtc.source_files = 'WLTUICallKit/Classes/*'
   end
   
   # s.subspec 'TRTC' do |trtc|
