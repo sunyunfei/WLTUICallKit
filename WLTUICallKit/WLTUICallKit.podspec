@@ -47,22 +47,22 @@ TODO: Add long description of the pod here.
   s.subspec 'TRTC' do |trtc|
     trtc.dependency 'TXLiteAVSDK_TRTC'
     trtc.dependency 'TUICallEngine/TRTC', '~> 1.5.1.310'
-    trtc.source_files = 'WLTUICallKit/Classes/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Base/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+    trtc.source_files = 'WLTUICallKit/Classes/*.{h,m,mm}', 'WLTUICallKit/Classes/localized/**/*.{h,m,mm}', 'WLTUICallKit/Classes/Base/*.{h,m,mm}', 'WLTUICallKit/Classes/Service/**/*.{h,m,mm}', 'WLTUICallKit/Classes/Config/*.{h,m,mm}', 'WLTUICallKit/Classes/UI/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit_TRTC/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallEngine_Framework/*.{h,m,mm}'
     trtc.ios.framework = ['AVFoundation', 'Accelerate']
     trtc.library = 'c++', 'resolv','sqlite3'
     trtc.resource_bundles = {
-      'TUICallingKitBundle' => ['WLTUICallKit/Assets/Resources/Localized/**/*.gif','WLTUICallKit/Assets/Resources/Localized/**/*.strings', 'WLTUICallKit/Assets/Resources/AudioFile', 'WLTUICallKit/Assets/Resources/*.xcassets']
+      'TUICallingKitBundle' => ['WLTUICallKit/Assets/Localized/**/*.gif','WLTUICallKit/Assets/Localized/**/*.strings', 'WLTUICallKit/Assets/AudioFile', 'WLTUICallKit/Assets/*.xcassets']
     }
   end
   
   s.subspec 'Professional' do |professional|
     professional.dependency 'TXLiteAVSDK_Professional'
     professional.dependency 'TUICallEngine/Professional'
-    professional.source_files = 'WLTUICallKit/Classes/TUICallKit/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/localized/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Base/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Service/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/Config/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/UI/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/TUICallKit_Professional/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit/TUICallEngine_Framework/*.{h,m,mm}'
+    professional.source_files = 'WLTUICallKit/Classes/*.{h,m,mm}', 'WLTUICallKit/Classes/localized/**/*.{h,m,mm}', 'WLTUICallKit/Classes/Base/*.{h,m,mm}', 'WLTUICallKit/Classes/Service/**/*.{h,m,mm}', 'WLTUICallKit/Classes/Config/*.{h,m,mm}', 'WLTUICallKit/Classes/UI/**/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallKit_Professional/*.{h,m,mm}', 'WLTUICallKit/Classes/TUICallEngine_Framework/*.{h,m,mm}'
     professional.ios.framework = ['AVFoundation', 'Accelerate', 'AssetsLibrary']
     professional.library = 'c++', 'resolv', 'sqlite3'
     professional.resource_bundles = {
-      'TUICallingKitBundle' => ['WLTUICallKit/Assets/Resources/Localized/**/*.gif','WLTUICallKit/Assets/Resources/Localized/**/*.strings', 'WLTUICallKit/Assets/Resources/AudioFile', 'WLTUICallKit/Assets/Resources/*.xcassets']
+      'TUICallingKitBundle' => ['WLTUICallKit/Assets/Localized/**/*.gif','WLTUICallKit/Assets/Localized/**/*.strings', 'WLTUICallKit/Assets/AudioFile', 'WLTUICallKit/Assets/*.xcassets']
     }
   end
 end
