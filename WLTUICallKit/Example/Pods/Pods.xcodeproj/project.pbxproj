@@ -40,8 +40,8 @@
 		09C0E8CE28AC678E6210D6DFAD9A2125 /* WLTUICallKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WLTUICallKit-prefix.pch"; sourceTree = "<group>"; };
 		0CECF8C7244EE80579B822F86E067915 /* Pods-WLTUICallKit_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WLTUICallKit_Example-dummy.m"; sourceTree = "<group>"; };
 		158BEC1210DAF7299B045758693355EC /* Pods-WLTUICallKit_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WLTUICallKit_Tests-dummy.m"; sourceTree = "<group>"; };
-		1A5484FBEDE63E988B1C097737E0C746 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		1DAA527E31C3ADDF1F92B16812D4DAB1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1A5484FBEDE63E988B1C097737E0C746 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		1DAA527E31C3ADDF1F92B16812D4DAB1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		220009AB0309991896CC9BD254825485 /* Pods-WLTUICallKit_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-WLTUICallKit_Example"; path = Pods_WLTUICallKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23A2A55E6C94B8342ED0381D37A50E31 /* Pods-WLTUICallKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WLTUICallKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		305A981AEF1F27A1E5BE3658DBFFE172 /* Pods-WLTUICallKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WLTUICallKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -53,10 +53,10 @@
 		7D41CA6E42F1A3544EC1E1B21DBDAD35 /* WLTUICallKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "WLTUICallKit-Info.plist"; sourceTree = "<group>"; };
 		8AF06D3BEEAC1C124F0C8E7295843CD2 /* Pods-WLTUICallKit_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WLTUICallKit_Example-Info.plist"; sourceTree = "<group>"; };
 		8BB0786BCE91C66175786CC0967A92EB /* WLTUICallKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WLTUICallKit.release.xcconfig; sourceTree = "<group>"; };
-		8D13A2D0CC91CC22FA4B5ECBA927796E /* WLTUICallKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = WLTUICallKit.podspec; sourceTree = "<group>"; tabWidth = 2; };
+		8D13A2D0CC91CC22FA4B5ECBA927796E /* WLTUICallKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = WLTUICallKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8FEB50F19D3EB2A1F07DE31A1EAD7644 /* Pods-WLTUICallKit_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WLTUICallKit_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		91C71D6E6DDC10462FE375CA7C676F18 /* Pods-WLTUICallKit_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-WLTUICallKit_Tests.modulemap"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A4489986E37BF2C403210CDB36466376 /* Pods-WLTUICallKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WLTUICallKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A534C1B0CBFE11AF01295A3A7F461546 /* Pods-WLTUICallKit_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WLTUICallKit_Tests-Info.plist"; sourceTree = "<group>"; };
 		A83B03DD89A7D45D1477C8A5923D5197 /* Pods-WLTUICallKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WLTUICallKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -562,7 +562,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
