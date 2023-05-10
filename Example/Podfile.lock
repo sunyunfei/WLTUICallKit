@@ -1,16 +1,65 @@
 PODS:
-  - WLTUICallKit (0.1.0)
+  - Masonry (1.1.0)
+  - ReactiveObjC (3.1.1)
+  - SDWebImage (5.15.7):
+    - SDWebImage/Core (= 5.15.7)
+  - SDWebImage/Core (5.15.7)
+  - TUICallEngine/TRTC (1.5.1.310):
+    - TXIMSDK_Plus_iOS (~> 7.1.3925)
+    - TXLiteAVSDK_TRTC
+  - TUICore (7.1.3925):
+    - ReactiveObjC
+    - SDWebImage
+    - TUICore/ImSDK_Plus (= 7.1.3925)
+  - TUICore/Base (7.1.3925):
+    - ReactiveObjC
+    - SDWebImage
+  - TUICore/ImSDK_Plus (7.1.3925):
+    - ReactiveObjC
+    - SDWebImage
+    - TUICore/Base
+    - TXIMSDK_Plus_iOS (= 7.1.3925)
+  - TXIMSDK_Plus_iOS (7.1.3925)
+  - TXLiteAVSDK_TRTC (11.1.14143):
+    - TXLiteAVSDK_TRTC/TRTC (= 11.1.14143)
+  - TXLiteAVSDK_TRTC/TRTC (11.1.14143)
+  - WLTUICallKit (0.9.8):
+    - Masonry
+    - TUICore (~> 7.1.3925)
+    - WLTUICallKit/TRTC (= 0.9.8)
+  - WLTUICallKit/TRTC (0.9.8):
+    - Masonry
+    - TUICallEngine/TRTC (~> 1.5.1.310)
+    - TUICore (~> 7.1.3925)
+    - TXLiteAVSDK_TRTC
 
 DEPENDENCIES:
   - WLTUICallKit (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Masonry
+    - ReactiveObjC
+    - SDWebImage
+    - TUICallEngine
+    - TUICore
+    - TXIMSDK_Plus_iOS
+    - TXLiteAVSDK_TRTC
 
 EXTERNAL SOURCES:
   WLTUICallKit:
     :path: "../"
 
 SPEC CHECKSUMS:
-  WLTUICallKit: cefe6e59c3c6470bb8ef692e062e5c35bd42ee2c
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  SDWebImage: 25bac438318faf37e35650619ebc288a9061d292
+  TUICallEngine: 42f441d20c15b1660a097d4ee4599f978fc81d91
+  TUICore: edc9e0911f6a04224620d7098ff9d7f4b1f0291a
+  TXIMSDK_Plus_iOS: 3edf95acc3dff794287ea858b5205ed6f4dd339f
+  TXLiteAVSDK_TRTC: 15b46120bfb5227c4f07a03d7b73b2530a4034bf
+  WLTUICallKit: 3f16ed8e4ca41b00b0d8ec4679d021043d13f0e8
 
-PODFILE CHECKSUM: 1c18b0abd2eab90d9310bfc4c32d7bde2067521e
+PODFILE CHECKSUM: bc84e943c8c8d3c2ea37d0476ff2c827a3a7779f
 
 COCOAPODS: 1.11.3
