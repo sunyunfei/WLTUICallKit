@@ -10,7 +10,7 @@
 #import "TUICallingAction.h"
 #import "Masonry.h"
 #import "CustomButton.h"
-#import "Lottie.h"
+#import <Lottie/Lottie.h>
 @interface TUICallingAudioFunctionView ()
 
 @property (nonatomic, strong) CustomButton *muteBtn;
