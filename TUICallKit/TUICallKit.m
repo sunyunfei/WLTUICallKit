@@ -527,7 +527,8 @@ callMediaType:(TUICallMediaType)callMediaType
     if (!self.timerName.length) {
         [self startTimer];
     }
-    
+  [self.callingViewManager beginCall];
+  [self.callingViewManager updateWindow];
     [self enableAutoLockScreen:NO];
 }
 
@@ -833,5 +834,19 @@ callMediaType:(TUICallMediaType)callMediaType
     callParams.timeout = TUI_CALLKIT_SIGNALING_MAX_TIME;
     return callParams;
 }
-
+- (void)updateUserInfo:(NSDictionary *)json{
+  [NSNotificationCenter.defaultCenter postNotificationName:@"flutterCallBack" object:@{@"func":@"userInfo",@"param":json}];
+}
+- (void)updateCostInfo:(NSDictionary *)json{
+  [NSNotificationCenter.defaultCenter postNotificationName:@"flutterCallBack" object:@{@"func":@"costBean",@"param":json}];
+}
+- (void)updateIncomeInfo:(NSDictionary *)json{
+  [NSNotificationCenter.defaultCenter postNotificationName:@"flutterCallBack" object:@{@"func":@"userIncome",@"param":json}];
+}
+- (void)isRandomVideo:(BOOL)random{
+  [NSNotificationCenter.defaultCenter postNotificationName:@"flutterCallBack" object:@{@"func":@"window",@"param":@(random)}];
+}
+- (void)playGift:(NSString *)gift{
+  [NSNotificationCenter.defaultCenter postNotificationName:@"flutterCallBack" object:@{@"func":@"playGift",@"param":gift}];
+}
 @end

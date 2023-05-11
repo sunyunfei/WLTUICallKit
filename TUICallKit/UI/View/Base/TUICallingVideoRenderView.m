@@ -63,7 +63,7 @@
         self.volumeProgress.progress = userModel.volume;
     }
     
-    self.volumeProgress.hidden = noModel;
+  self.volumeProgress.hidden = true;//noModel;
 }
 
 #pragma mark - Gesture Action

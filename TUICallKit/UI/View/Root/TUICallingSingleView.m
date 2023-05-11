@@ -16,7 +16,7 @@
 
 static CGFloat const kCallingSingleSmallVideoViewWidth = 100.0f;
 #define kTUICallingSingleViewMicroRenderFrame CGRectMake(self.frame.size.width - kCallingSingleSmallVideoViewWidth - 18,\
-StatusBar_Height + 20, kCallingSingleSmallVideoViewWidth, kCallingSingleSmallVideoViewWidth / 9.0 * 16.0)
+StatusBar_Height + 60, kCallingSingleSmallVideoViewWidth, kCallingSingleSmallVideoViewWidth / 9.0 * 16.0)
 
 @interface TUICallingSingleView () <TUICallingVideoRenderViewDelegate>
 
@@ -50,7 +50,7 @@ StatusBar_Height + 20, kCallingSingleSmallVideoViewWidth, kCallingSingleSmallVid
     [self.localPreView setUserInteractionEnabled:NO];
     self.remotePreView.hidden = YES;
     self.localPreView.hidden = NO;
-    self.backgroundColor = [UIColor t_colorWithHexString:@"#242424"];
+    self.backgroundColor = UIColor.clearColor;
     [self addSubview:self.remotePreView];
     [self addSubview:self.localPreView];
     [TUICallingAction openCamera:TUICameraFront videoView:self.localPreView];

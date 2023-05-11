@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  View Manager Class
  */
 @interface TUICallingViewManager : NSObject <TUICallingStatusManagerProtocol>
-
+@property (nonatomic,assign) NSInteger userId;
 - (void)createCallingView:(TUICallMediaType)callType callRole:(TUICallRole)callRole callScene:(TUICallScene)callScene;
 
 - (void)createGroupCallingAcceptView:(TUICallMediaType)callType callRole:(TUICallRole)callRole callScene:(TUICallScene)callScene;
@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)enableFloatWindow:(BOOL)enable;
 
+- (void)beginCall;
+- (void)updateWindow;
 @end
 
 NS_ASSUME_NONNULL_END

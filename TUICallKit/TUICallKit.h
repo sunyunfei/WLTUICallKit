@@ -105,7 +105,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enableCustomViewRoute:(BOOL)enable NS_SWIFT_NAME(enableCustomViewRoute(enable:))NS_SWIFT_NAME(enableCustomViewRoute(enable:));
 
 - (UIViewController *_Nullable)getCallViewController NS_SWIFT_NAME(getCallViewController());
-
+- (void)updateUserInfo:(NSDictionary *)json;
+- (void)updateCostInfo:(NSDictionary *)json;
+- (void)updateIncomeInfo:(NSDictionary *)json;
+- (void)isRandomVideo:(BOOL)random;
+- (void)playGift:(NSString *)gift;
 @end
 
 NS_ASSUME_NONNULL_END

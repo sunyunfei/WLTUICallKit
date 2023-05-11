@@ -32,7 +32,7 @@
 
 - (void)setTimerTextColor:(UIColor *)textColor {
     if (textColor) {
-        self.timerLabel.textColor = textColor;
+      self.timerLabel.textColor = UIColor.whiteColor;//textColor;
     }
 }
 
@@ -45,8 +45,8 @@
 - (UILabel *)timerLabel {
     if (!_timerLabel) {
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_timerLabel setTextColor:[UIColor t_colorWithHexString:@"#000000"]];
-        [_timerLabel setFont:[UIFont systemFontOfSize:14.0f]];
+        [_timerLabel setTextColor:UIColor.whiteColor];
+        [_timerLabel setFont:[UIFont systemFontOfSize:18.0f weight:(UIFontWeightMedium)]];
         [_timerLabel setBackgroundColor:[UIColor clearColor]];
         [_timerLabel setTextAlignment:NSTextAlignmentCenter];
     }

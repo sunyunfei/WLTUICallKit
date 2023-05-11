@@ -8,16 +8,16 @@
 
 #import "TUICallingVideoInviteFunctionView.h"
 #import "Masonry.h"
-
+#import "CustomButton.h"
 @interface TUICallingVideoInviteFunctionView ()
 
-@property (nonatomic, strong) TUICallingControlButton *hangupBtn;
-@property (nonatomic, strong) UIButton *switchCameraBtn;
+@property (nonatomic, strong) CustomButton *hangupBtn;
+@property (nonatomic, strong) CustomButton *switchCameraBtn;
 
 @end
 
 @implementation TUICallingVideoInviteFunctionView
-
+@synthesize localPreView = _localPreView;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -31,20 +31,21 @@
 
 - (void)makeConstraints {
     [self.hangupBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self);
-        make.size.equalTo(@(kControlBtnSize));
+        make.bottom.mas_equalTo(0);
+        make.size.equalTo(@(kHandleBtnSize));
+        make.right.mas_equalTo(-16);
     }];
     [self.switchCameraBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.hangupBtn);
-        make.left.equalTo(self.hangupBtn.mas_right).offset(20);
-        make.size.equalTo(@(CGSizeMake(36, 36)));
+        make.right.equalTo(self.hangupBtn.mas_left).offset(-10);
+        make.size.equalTo(@(kHandleBtnSize));
     }];
 }
 
 #pragma mark - TUICallingFunctionViewProtocol
 
 - (void)updateTextColor:(UIColor *)textColor {
-    [self.hangupBtn updateTitleColor:textColor];
+//    [self.hangupBtn updateTitleColor:textColor];
 }
 
 #pragma mark - Action Event
@@ -54,28 +55,42 @@
 }
 
 - (void)switchCameraTouchEvent:(UIButton *)sender {
-    [TUICallingAction switchCamera];
+    if (![TUICallingStatusManager shareInstance].isCloseCamera) {
+        [TUICallingAction closeCamera];
+      [self.switchCameraBtn updateImage:[UIImage imageNamed:@"camera_close"]];
+    } else {
+        [TUICallingAction openCamera:[TUICallingStatusManager shareInstance].camera videoView:_localPreView];
+      [self.switchCameraBtn updateImage:[UIImage imageNamed:@"camera_open"]];
+    }
 }
 
 #pragma mark - Lazy
 
-- (TUICallingControlButton *)hangupBtn {
+- (CustomButton *)hangupBtn {
     if (!_hangupBtn) {
         __weak typeof(self) weakSelf = self;
-        _hangupBtn = [TUICallingControlButton createWithFrame:CGRectZero
-                                                    titleText:TUICallingLocalize(@"Demo.TRTC.Calling.hangup")
-                                                 buttonAction:^(UIButton * _Nonnull sender) {
-            [weakSelf hangupTouchEvent:sender];
-        } imageSize:kBtnLargeSize];
-        [_hangupBtn updateImage:[TUICallingCommon getBundleImageWithName:@"ic_hangup"]];
+      _hangupBtn = [[CustomButton alloc] initWithImage:@"ic_hangup" title:@"挂断" color:UIColor.whiteColor];
+      _hangupBtn.backgroundColor = [UIColor t_colorWithHexString:@"#F23D78"];
+      _hangupBtn.layer.cornerRadius = 30;
+      _hangupBtn.clipsToBounds = true;
+      [_hangupBtn addTarget:self action:@selector(hangupTouchEvent:) forControlEvents:(UIControlEventTouchUpInside)];
+//        _hangupBtn = [TUICallingControlButton createWithFrame:CGRectZero
+//                                                    titleText:TUICallingLocalize(@"Demo.TRTC.Calling.hangup")
+//                                                 buttonAction:^(UIButton * _Nonnull sender) {
+//            [weakSelf hangupTouchEvent:sender];
+//        } imageSize:kBtnLargeSize];
+//        [_hangupBtn updateImage:[TUICallingCommon getBundleImageWithName:@"ic_hangup"]];
     }
     return _hangupBtn;
 }
 
-- (UIButton *)switchCameraBtn {
+- (CustomButton *)switchCameraBtn {
     if (!_switchCameraBtn) {
-        _switchCameraBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_switchCameraBtn setBackgroundImage:[TUICallingCommon getBundleImageWithName:@"switch_camera"] forState:UIControlStateNormal];
+      _switchCameraBtn = [[CustomButton alloc] initWithImage:@"camera_open" title:@"镜头开启"];
+      _switchCameraBtn.backgroundColor = [UIColor t_colorWithHexString:@"#ffffff"];
+      _switchCameraBtn.layer.cornerRadius = 30;
+      _switchCameraBtn.clipsToBounds = true;
+//        [_switchCameraBtn setBackgroundImage:[TUICallingCommon getBundleImageWithName:@"switch_camera"] forState:UIControlStateNormal];
         [_switchCameraBtn addTarget:self action:@selector(switchCameraTouchEvent:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _switchCameraBtn;

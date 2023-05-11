@@ -23,6 +23,7 @@ typedef void(^TUICallingButtonActionBlock) (UIButton *sender);
 
 - (void)updateTitleColor:(UIColor *)titleColor;
 
+- (void)updateFont:(UIFont *)font;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateHandsFreeStatus;
 
+- (void)updateBeginStatus;
+- (void)updateChargeStatus:(BOOL)normal;
+
 @end
 
 NS_ASSUME_NONNULL_END

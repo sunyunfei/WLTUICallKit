@@ -64,6 +64,11 @@
         self.titleLabel.textColor = titleColor;
     }
 }
+- (void)updateFont:(UIFont *)font{
+  if (font){
+    self.titleLabel.font = font;
+  }
+}
 
 #pragma mark - Event Action
 

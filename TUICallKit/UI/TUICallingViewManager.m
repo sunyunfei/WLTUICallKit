@@ -33,6 +33,12 @@
 #import "TUICallEngineHeader.h"
 #import "TUICore.h"
 #import "TUICallingNavigationController.h"
+#import "CustomUserInfoView.h"
+#import "CustomGiftView.h"
+#import "CustomRechargeView.h"
+#import "CustomMinuteCostView.h"
+#import "CustomIncomeView.h"
+#import "Lottie.h"
 
 static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit";
 
@@ -55,7 +61,16 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
 /// Is Enable FloatWindow
 @property (nonatomic, assign) BOOL enableFloatWindow;
 @property (nonatomic, assign) BOOL alreadyShownCallKitView;
-
+@property (nonatomic,strong) UIImageView *userAvatarView;
+@property (nonatomic,strong) CustomUserInfoView *userInfoView;
+@property (nonatomic,strong) CustomGiftView *giftView;
+@property (nonatomic,strong) CustomRechargeView *rechargeView;
+@property (nonatomic,strong) CustomMinuteCostView *costView;
+@property (nonatomic,strong) CustomIncomeView *incomeView;
+@property (nonatomic,strong) LOTAnimationView *lottieView;
+@property (nonatomic,strong) UILabel *tips;
+@property (nonatomic,copy) NSString *playingUrl;
+@property (nonatomic,assign) BOOL isRandom;
 @end
 
 @implementation TUICallingViewManager
@@ -66,18 +81,119 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
         CGSize screenSize = [UIScreen mainScreen].bounds.size;
         self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenSize.width, screenSize.height)];
         [[TUICallingFloatingWindowManager shareInstance] setFloatingWindowManagerDelegate:self];
-        self.containerView.backgroundColor = [UIColor t_colorWithHexString:@"#F2F2F2"];
+        self.containerView.backgroundColor = UIColor.redColor;
         self.enableFloatWindow = NO;
+      [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(flutterCallBack:) name:@"flutterCallBack" object:nil];
         [TUICore registerEvent:TUICore_TUIGroupNotify subKey:TUICore_TUIGroupNotify_SelectGroupMemberSubKey object:self];
     }
     return self;
 }
-
+- (void)flutterCallBack:(NSNotification *)noti{
+  NSDictionary *json = noti.object;
+  NSString *func = json[@"func"];
+  if ([func isEqualToString:@"userInfo"]){
+    NSDictionary *user = json[@"param"];
+    NSString *path = user[@"avatar"][@"url"];
+    NSString *name = user[@"name"];
+    BOOL isVideo = [TUICallingStatusManager shareInstance].callMediaType == TUICallMediaTypeVideo;
+    BOOL isCaller = TUICallingStatusManager.shareInstance.callRole == TUICallRoleCall;
+    [self.userInfoView updateInfo:user];
+    if (!path || [path isKindOfClass:NSNull.class] || [path isEqualToString:@"<null>"]){
+      path = @"";
+    }
+    NSURL *url = [NSURL URLWithString:path];
+    [self.userAvatarView sd_setImageWithURL:url];
+    self.userId = [user[@"id"] intValue];
+    if (!isCaller){
+      [self.userInfoView updateTips:[NSString stringWithFormat:@"「%@」向你发来了%@邀请",name,isVideo ? @"视频" : @"语音"]];
+    }
+    
+  }else if ([func isEqualToString:@"gift"]){
+    BOOL isShow = [json[@"param"] boolValue];
+    if (isShow){
+      [self.giftView reloadData];
+    }
+    [self.containerView bringSubviewToFront:self.giftView];
+    [UIView animateWithDuration:0.25 animations:^{
+      self.giftView.mm_y = isShow ? UIScreen.mainScreen.bounds.size.height - self.giftView.frame.size.height : UIScreen.mainScreen.bounds.size.height;
+    }];
+  }else if ([func isEqualToString:@"recharge"]){
+    BOOL isShow = [json[@"param"] boolValue];
+    if (isShow){
+      [self.rechargeView reloadData];
+    }
+    [self.containerView bringSubviewToFront:self.rechargeView];
+    [UIView animateWithDuration:0.25 animations:^{
+      self.rechargeView.mm_y = isShow ? UIScreen.mainScreen.bounds.size.height - self.rechargeView.frame.size.height : UIScreen.mainScreen.bounds.size.height;
+    }];
+  }else if ([func isEqualToString:@"giftList"]){
+    NSArray *items = json[@"param"];
+    [self.giftView updateList:items];
+  }else if ([func isEqualToString:@"updateGold"]){
+    int gold = [json[@"param"] intValue];
+    [self.giftView updateGold:gold];
+  }else if ([func isEqualToString:@"sendGift"]){
+    NSDictionary *param = json[@"param"];
+    
+  }else if ([func isEqualToString:@"rechargeList"]){
+    NSArray *items = json[@"param"];
+    [self.rechargeView updateList:items];
+  }else if ([func isEqualToString:@"costBean"]){
+    NSDictionary *param = json[@"param"];
+    [self.costView updateTimeInfo:param];
+  }else if ([func isEqualToString:@"userIncome"]){
+    NSDictionary *param = json[@"param"];
+    [self.incomeView updateIncome:param];
+    BOOL show = [param[@"show_fee_type"] intValue] == 1;
+    int tip_minute = [param[@"fee_tips_minutes"] intValue];
+    int total_minute = [param[@"fee_total_minutes"] intValue];
+    BOOL need = total_minute - tip_minute <= 1;
+    
+    [self.callingFunctionView updateChargeStatus:!show || !need];
+    
+    if (show && need){
+      NSString *s = @"文撩提醒您：";
+      NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+      style.lineSpacing = 5;
+      NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n您的撩币余额已不足%d分钟，为避免通话中断，请及时为爱充值～",s,total_minute] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12],NSForegroundColorAttributeName:UIColor.whiteColor,NSParagraphStyleAttributeName:style}];
+      [att addAttributes:@{NSForegroundColorAttributeName:[UIColor t_colorWithHexString:@"#25E093"]} range:NSMakeRange(0, s.length)];
+      self.tips.attributedText = att;
+    }
+  }else if ([func isEqualToString:@"window"]){
+    BOOL random = [json[@"param"] boolValue];
+    self.isRandom = random;
+  }else if ([func isEqualToString:@"playGift"]){
+    NSString *path = json[@"param"];
+    if (!path || [path isKindOfClass:NSNull.class] || [path isEqualToString:@"<null>"]){
+      path = @"";
+    }
+    self.playingUrl = path;
+    if (self.lottieView || path.length == 0){
+      return;
+    }
+    self.lottieView = [[LOTAnimationView alloc] initWithContentsOfURL:[NSURL URLWithString:path]];
+    self.lottieView.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.lottieView];
+    __weak typeof(self) ws = self;
+    [self.lottieView playWithCompletion:^(BOOL animationFinished) {
+      [ws cleanPlayingUrl];
+    }];
+    [self performSelector:@selector(cleanPlayingUrl) withObject:nil afterDelay:12];
+  }
+}
+- (void)cleanPlayingUrl{
+    self.playingUrl = nil;
+    [self.lottieView removeFromSuperview];
+    self.lottieView = nil;
+  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(cleanPlayingUrl) object:nil];
+}
 #pragma mark - Initialize Waiting View
 
 - (void)initSingleWaitingView {
     [self clearAllSubViews];
-    
+  
+  self.userInfoView.hidden = false;
+  
     switch ([TUICallingStatusManager shareInstance].callMediaType) {
         case TUICallMediaTypeAudio:{
             [self initSingleAudioWaitingView];
@@ -96,12 +212,18 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     
     if ([TUICallingStatusManager shareInstance].callRole == TUICallRoleCall) {
         self.callingFunctionView = [[TUICallingAudioFunctionView alloc] initWithFrame:CGRectZero];
+      [self.userInfoView updateTips:@"正在等待对方接听~"];
     } else {
         self.callingFunctionView = [[TUICallingWaitFunctionView alloc] initWithFrame:CGRectZero];
+      [self.userInfoView updateTips:@""];
     }
-    
+  [self.containerView addSubview:self.userAvatarView];
     [self.containerView addSubview:self.callingUserView];
     [self.containerView addSubview:self.callingFunctionView];
+  [self.containerView addSubview:self.userInfoView];
+  [self.containerView addSubview:self.costView];
+  [self.containerView addSubview:self.tips];
+  [self.containerView addSubview:self.incomeView];
     [self makeUserViewConstraints:75.0f];
     [self makeFunctionViewConstraints:92.0f];
     [self initMicMute:YES];
@@ -121,16 +243,23 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     
     if ([TUICallingStatusManager shareInstance].callRole == TUICallRoleCall) {
         self.callingFunctionView = [[TUICallingVideoInviteFunctionView alloc] initWithFrame:CGRectZero];
+      self.callingFunctionView.localPreView = self.localPreView;
+      [self.userInfoView updateTips:@"正在等待对方接听~"];
     } else {
         self.callingFunctionView = [[TUICallingWaitFunctionView alloc] initWithFrame:CGRectZero];
+      [self.userInfoView updateTips:@""];
     }
-    
+  
     [self.containerView addSubview:self.backgroundView];
     [self.containerView addSubview:self.callingUserView];
-    [self.containerView addSubview:self.switchToAudioView];
+//    [self.containerView addSubview:self.switchToAudioView];
     [self.containerView addSubview:self.callingFunctionView];
-    [self makeUserViewConstraints:20.0f];
-    [self makeSwitchToAudioViewConstraints:8.0f];
+  [self.containerView addSubview:self.userInfoView];
+  [self.containerView addSubview:self.costView];
+  [self.containerView addSubview:self.tips];
+  [self.containerView addSubview:self.incomeView];
+    [self makeUserViewConstraints:60.f];
+//    [self makeSwitchToAudioViewConstraints:8.0f];
     [self makeFunctionViewConstraints:92.0f];
     [self initHandsFree:TUIAudioPlaybackDeviceSpeakerphone];
 }
@@ -150,6 +279,8 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
                 self.callingFunctionView = [[TUICallingAudioFunctionView alloc] initWithFrame:CGRectZero];
             }
             [self.containerView addSubview:self.callingFunctionView];
+          [self.containerView addSubview:self.userInfoView];
+          [self.containerView addSubview:self.costView];
             [self makeFunctionViewConstraints:190.0f];
         } break;
         case TUICallRoleCalled:{
@@ -159,6 +290,8 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
             [self.containerView addSubview:self.callingUserView];
             [self.containerView addSubview:self.callingCalleeView];
             [self.containerView addSubview:self.callingFunctionView];
+          [self.containerView addSubview:self.userInfoView];
+          [self.containerView addSubview:self.costView];
             [self makeUserViewConstraints:75.0f];
             [self makeCallingCalleeViewConstraints];
             [self makeFunctionViewConstraints:92.0f];
@@ -178,6 +311,7 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
 #pragma mark - Initialize Accept View
 
 - (void)initSingleAcceptCallView {
+  
     switch ([TUICallingStatusManager shareInstance].callMediaType) {
         case TUICallMediaTypeAudio:{
             [self initSingleAudioAcceptCallView];
@@ -205,7 +339,7 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
         [self clearCallingFunctionView];
         self.callingFunctionView = [[TUICallingAudioFunctionView alloc] initWithFrame:CGRectZero];
     }
-    
+    [self.containerView addSubview:self.userAvatarView];
     [self.containerView addSubview:self.callingUserView];
     [self.containerView addSubview:self.timerView];
     [self.containerView addSubview:self.callingFunctionView];
@@ -229,10 +363,11 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     }
     
     [self.containerView addSubview:self.backgroundView];
-    [self.containerView addSubview:self.switchToAudioView];
+  [self.containerView sendSubviewToBack:self.backgroundView];
+//    [self.containerView addSubview:self.switchToAudioView];
     [self.containerView addSubview:self.timerView];
     [self.containerView addSubview:self.callingFunctionView];
-    [self makeSwitchToAudioViewConstraints:0.0f];
+//    [self makeSwitchToAudioViewConstraints:0.0f];
     [self makeTimerViewConstraints:54.0f];
     [self makeFunctionViewConstraints:190.0f];
     [self initMicMute:YES];
@@ -267,6 +402,8 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     [self.containerView addSubview:self.backgroundView];
     [self.containerView addSubview:self.timerView];
     [self.containerView addSubview:self.callingFunctionView];
+  [self.containerView addSubview:self.userInfoView];
+  [self.containerView addSubview:self.costView];
     [self makeTimerViewConstraints:0.0f];
     [self makeFunctionViewConstraints:functionViewHeight];
     [self initMicMute:[TUICallingStatusManager shareInstance].isMicMute];
@@ -381,18 +518,47 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
 - (void)makeUserViewConstraints:(CGFloat)topOffset {
     [self.callingUserView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.containerView).offset(StatusBar_Height + topOffset);
-        make.left.equalTo(self.containerView).offset(20);
-        make.right.equalTo(self.containerView).offset(-20);
+        make.left.equalTo(self.containerView).offset(16);
+        make.right.equalTo(self.containerView).offset(-16);
     }];
+  self.callingUserView.hidden = true;
+  if (self.userAvatarView.superview){
+    [self.containerView sendSubviewToBack:self.userAvatarView];
+    [self.userAvatarView mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.edges.mas_equalTo(0);
+    }];
+  }
 }
 
 - (void)makeFunctionViewConstraints:(CGFloat)height {
     [self.callingFunctionView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.containerView);
-        make.bottom.equalTo(self.containerView.mas_top).offset(self.containerView.frame.size.height - Bottom_SafeHeight - 20);
-        make.height.equalTo(@(height));
-        make.width.equalTo(self.containerView.mas_width);
+      make.left.width.mas_equalTo(self.containerView);
+      make.top.mas_equalTo(self.containerView).mas_offset(StatusBar_Height);
+      make.bottom.mas_equalTo(self.containerView).mas_offset(-Bottom_SafeHeight-20);
     }];
+  if (self.userInfoView.superview){
+    [self.userInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.left.mas_equalTo(20);
+      make.bottom.mas_equalTo(self.callingFunctionView).mas_offset(-116);
+    }];
+    [self.tips mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.bottom.mas_equalTo(self.callingFunctionView).mas_offset(-90);
+      make.left.mas_equalTo(20);
+      make.right.mas_equalTo(-100);
+    }];
+    [self.incomeView mas_makeConstraints:^(MASConstraintMaker *make) {
+      make.left.mas_equalTo(20);
+      make.bottom.mas_equalTo(self.tips.mas_top).mas_offset(-16);
+    }];
+    if (TUICallingStatusManager.shareInstance.callStatus != TUICallStatusAccept){
+      [self.costView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20);
+        make.bottom.mas_equalTo(self.callingFunctionView).mas_offset(-90);
+      }];
+    }
+  }
+  
+  
 }
 
 - (void)makeCallingCalleeViewConstraints {
@@ -417,14 +583,18 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
         make.centerX.equalTo(self.containerView);
         make.height.equalTo(@(30));
         make.width.equalTo(self.containerView.mas_width);
-        make.bottom.equalTo(self.callingFunctionView.mas_top).offset(-bottomOffset);
+        make.top.equalTo(self.containerView).offset(StatusBar_Height+5);
     }];
+  [self.costView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    make.centerX.mas_equalTo(self.timerView);
+    make.top.mas_equalTo(self.timerView.mas_bottom).mas_offset(10);
+  }];
 }
 
 - (void)makeFloatingWindowBtnConstraints {
     [self.floatingWindowBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.containerView).offset(StatusBar_Height + 3);
-        make.left.equalTo(self.containerView).offset(10);
+        make.top.equalTo(self.containerView).offset(StatusBar_Height + 10);
+        make.right.equalTo(self.containerView).offset(-16);
         make.width.height.equalTo(@(32));
     }];
 }
@@ -453,7 +623,6 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     if ([TUICallingStatusManager shareInstance].callRole == TUICallRoleCall) {
         self.remoteUser = [inviteeList firstObject];
     }
-    
     [self updateCallingUserView];
     [self updateCallingBackgroundView:sponsor];
     [self.callingCalleeView updateViewWithUserList:inviteeList];
@@ -486,10 +655,15 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:self.containerView];
+  [self.containerView addSubview:self.giftView];
+  [self.containerView addSubview:self.rechargeView];
+  self.giftView.mm_y = UIScreen.mainScreen.bounds.size.height;
+  self.rechargeView.mm_y = UIScreen.mainScreen.bounds.size.height;
     TUICallingNavigationController *nvc = [[TUICallingNavigationController alloc] initWithRootViewController: viewController];
     [nvc setNavigationBarHidden:true];
     self.callingWindow.rootViewController = nvc;
     self.callingWindow.hidden = NO;
+  self.callingWindow.alpha = self.isRandom ? 0 : 1;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self->_callingWindow != nil) {
             [self.callingWindow t_makeKeyAndVisible];
@@ -499,9 +673,15 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
 
 - (void)closeCallingView {
     [self clearAllSubViews];
+  [self.userInfoView clean];
+  self.tips.attributedText = nil;
+  [self.incomeView updateIncome:nil];
+  [self.costView removeFromSuperview];
+  [self.userAvatarView removeFromSuperview];
     [self.containerView removeFromSuperview];
     self.callingWindow.hidden = YES;
     self.callingWindow = nil;
+  self.isRandom = false;
     self.alreadyShownCallKitView = NO;
     [[TUICallingFloatingWindowManager shareInstance] closeMicroFloatingWindow:nil];
 }
@@ -543,7 +723,26 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
 - (void)enableFloatWindow:(BOOL)enable {
     self.enableFloatWindow = enable;
 }
-
+- (void)beginCall{
+  if ([self.callingFunctionView respondsToSelector:@selector(updateBeginStatus)]){
+    [self.callingFunctionView updateBeginStatus];
+  }
+  self.userInfoView.hidden = true;
+  NSString *s = @"文撩提醒您：";
+  NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+  style.lineSpacing = 5;
+  NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n请勿在视频时发布涉黄涉政等违法行为，一经发现将自动封号，以色情、婚恋、线下约会或其他异常行为引诱添加第三方账号或多刷礼物等多为诈骗，请及时向平台举报!",s] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12],NSForegroundColorAttributeName:UIColor.whiteColor,NSParagraphStyleAttributeName:style}];
+  [att addAttributes:@{NSForegroundColorAttributeName:[UIColor t_colorWithHexString:@"#25E093"]} range:NSMakeRange(0, s.length)];
+  self.tips.attributedText = att;
+  
+}
+- (void)updateWindow{
+  if (self.callingWindow.alpha == 0){
+    [UIView animateWithDuration:0.5 animations:^{
+      self.callingWindow.alpha = 1;
+    }];
+  }
+}
 #pragma mark - Action Event
 
 - (void)floatingWindowTouchEvent:(UIButton *)sender {
@@ -717,7 +916,7 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     if ((callScene != TUICallSceneSingle) || (callMediaType == TUICallMediaTypeVideo)) {
         backgroundColor = [UIColor t_colorWithHexString:@"#242424"];
     }
-    self.containerView.backgroundColor = backgroundColor;
+  self.containerView.backgroundColor = UIColor.blackColor;//backgroundColor;
 }
 
 - (void)updateViewTextColor {
@@ -805,6 +1004,10 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
     if (!_localPreView) {
         _localPreView = [[TUICallingVideoRenderView alloc] initWithFrame:CGRectZero];
         _localPreView.backgroundColor = [UIColor t_colorWithHexString:@"#242424"];
+      _localPreView.layer.cornerRadius = 10;
+      _localPreView.layer.borderWidth = 1.5;
+      _localPreView.layer.borderColor = UIColor.whiteColor.CGColor;
+      _localPreView.clipsToBounds = true;
         _localPreView.delegate = self.backgroundView;
     }
     return _localPreView;
@@ -836,6 +1039,54 @@ static NSString * const TUICallKit_TUIGroupService_UserDataValue = @"TUICallKit"
         [_addOtherUserBtn addTarget:self action:@selector(addOtherUserTouchEvent:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _addOtherUserBtn;
+}
+- (CustomUserInfoView *)userInfoView{
+  if (!_userInfoView){
+    _userInfoView = [CustomUserInfoView new];
+    _userInfoView.backgroundColor = UIColor.redColor;
+    _userInfoView.hidden = true;
+  }
+  return _userInfoView;
+}
+- (CustomGiftView *)giftView{
+  if (!_giftView){
+    _giftView = [CustomGiftView new];
+    _giftView.manager = self;
+  }
+  return _giftView;
+}
+- (CustomRechargeView *)rechargeView{
+  if (!_rechargeView){
+    _rechargeView = [CustomRechargeView new];
+  }
+  return _rechargeView;
+}
+- (CustomMinuteCostView *)costView{
+  if (!_costView){
+    _costView = [CustomMinuteCostView new];
+  }
+  return _costView;
+}
+- (CustomIncomeView *)incomeView{
+  if (!_incomeView){
+    _incomeView = [CustomIncomeView new];
+  }
+  return _incomeView;
+}
+- (UIImageView *)userAvatarView{
+  if (!_userAvatarView){
+    _userAvatarView = [UIImageView new];
+    _userAvatarView.contentMode = UIViewContentModeScaleAspectFill;
+    _userAvatarView.clipsToBounds = true;
+  }
+  return _userAvatarView;
+}
+- (UILabel *)tips{
+  if (!_tips){
+    _tips = [UILabel new];
+    _tips.numberOfLines = 0;
+  }
+  return _tips;
 }
 
 @end
