@@ -10,7 +10,8 @@
 #import <UIKit/UIKit.h>
 
 @class V2TIMUserFullInfo, CallingUserModel;
-
+#define kWidth UIScreen.mainScreen.bounds.size.width
+#define kHandleBtnSize CGSizeMake(kWidth/2-21,60)
 #define kControlBtnSize CGSizeMake(100, 92)
 #define kBtnLargeSize CGSizeMake(64, 64)
 #define kBtnSmallSize CGSizeMake(52, 52)
