@@ -1,4 +1,5 @@
 PODS:
+  - lottie-ios (2.5.3)
   - Masonry (1.1.0)
   - ReactiveObjC (3.1.1)
   - SDWebImage (5.15.7):
@@ -23,11 +24,13 @@ PODS:
   - TXLiteAVSDK_TRTC (11.1.14143):
     - TXLiteAVSDK_TRTC/TRTC (= 11.1.14143)
   - TXLiteAVSDK_TRTC/TRTC (11.1.14143)
-  - WLTUICallKit (0.9.8):
+  - WLTUICallKit (1.0.1):
+    - lottie-ios (~> 2.5.3)
     - Masonry
     - TUICore (~> 7.1.3925)
-    - WLTUICallKit/TRTC (= 0.9.8)
-  - WLTUICallKit/TRTC (0.9.8):
+    - WLTUICallKit/TRTC (= 1.0.1)
+  - WLTUICallKit/TRTC (1.0.1):
+    - lottie-ios (~> 2.5.3)
     - Masonry
     - TUICallEngine/TRTC (~> 1.5.1.310)
     - TUICore (~> 7.1.3925)
@@ -38,6 +41,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - lottie-ios
     - Masonry
     - ReactiveObjC
     - SDWebImage
@@ -51,6 +55,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  lottie-ios: a50d5c0160425cd4b01b852bb9578963e6d92d31
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDWebImage: 25bac438318faf37e35650619ebc288a9061d292
@@ -58,7 +63,7 @@ SPEC CHECKSUMS:
   TUICore: edc9e0911f6a04224620d7098ff9d7f4b1f0291a
   TXIMSDK_Plus_iOS: 3edf95acc3dff794287ea858b5205ed6f4dd339f
   TXLiteAVSDK_TRTC: 15b46120bfb5227c4f07a03d7b73b2530a4034bf
-  WLTUICallKit: 3f16ed8e4ca41b00b0d8ec4679d021043d13f0e8
+  WLTUICallKit: ba54f713ee1d05bc6f4e141297d002bcde7f051c
 
 PODFILE CHECKSUM: bc84e943c8c8d3c2ea37d0476ff2c827a3a7779f
 
